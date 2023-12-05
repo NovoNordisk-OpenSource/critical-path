@@ -31,33 +31,6 @@ var criticalPathMethod = new CriticalPathMethod();
 var criticalPath = criticalPathMethod.Execute(activities);
 ```
 
-## Consume nuget Package in Other Projects
-The Critical Path Method is distributed in a nuget package from the [Digital Foundation Nuget feed](https://novonordiskit.visualstudio.com/Digital%20Foundation/_artifacts/feed/Foundation_nuget). 
-
-To consume from this feed make sure that the following package source is added to either Visual Studio or the given solution.
-
-https://pkgs.dev.azure.com/novonordiskit/_packaging/Foundation_nuget%40Local/nuget/v3/index.json
-
-This can be done in two ways:
-
-1. from Visual Studio -> Tools -> Options... -> Nuget Package Manager.
-2. Create a NuGet.config in your solution or project root folder. Example:
-
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<configuration>
-  <packageSources>
-    <add key="nuget.org" value="https://api.nuget.org/v3/index.json" protocolVersion="3" />
-	<add key="Digital Foundation Nuget" value="https://pkgs.dev.azure.com/novonordiskit/_packaging/Foundation_nuget%40Local/nuget/v3/index.json" />
-  </packageSources>
-</configuration>
-```
-
-Option 2 is preferred if you want to share the settings with the rest of the team and the build pipeline.
-
-Your build pipeline agents should already have permission to read the feed. All you have to do is to make sure that you turned off "Limit job authorization scope to current project for non-release pipelines" 
-in ADO -> Project Settings -> Pipelines Settings
-
 # Notes
 ## Equal Critical Paths
 If the graph contains two equal critical paths, and therefore both have a total float of 0, then the 
@@ -76,7 +49,8 @@ We define this as 0. You could argue that it is infinite.
 
 # How to Contribute
 ## Branching Strategy
-Trunk based branching strategy is used. New features are added by creating feature branches that are then merged to main with a pull request. Pull requests requires the build pipeline to pass. Releases are done from release branches.
+Trunk based branching strategy is used. New features are added by creating feature branches that are then merged to main with a pull request. 
+Pull requests requires the build pipeline to pass. 
 
 ## Versioning
 The nuget package must follow [semver.org](https://www.semver.org).
