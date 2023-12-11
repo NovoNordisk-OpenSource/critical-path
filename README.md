@@ -53,12 +53,10 @@ Trunk based branching strategy is used. New features are added by creating featu
 Pull requests requires the build pipeline to pass. 
 
 ## Versioning
-The nuget package must follow [semver.org](https://www.semver.org).
+The nuget package follows [semver.org](https://www.semver.org).
 
 ## Release Procedure
-1. Create a release branch from main. Naiming convention is `release/x.y.z`.
-1. Run the Publish pipeline from the given branch and give the version number as parameter to the pipeline.
-1. The nuget package is stored in the Digital Foundation nuget feed.
+T.B.D.
 
 # References
 Based on:
