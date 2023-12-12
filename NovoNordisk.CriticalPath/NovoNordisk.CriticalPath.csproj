@@ -9,7 +9,7 @@
     <Description>An implementation of the Critical Path Method.</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes>See the CHANGELOG.md</PackageReleaseNotes>
-    <Authors>Novo Nordisk DII</Authors>
+    <Authors>Novo Nordisk Digital Foundation</Authors>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
