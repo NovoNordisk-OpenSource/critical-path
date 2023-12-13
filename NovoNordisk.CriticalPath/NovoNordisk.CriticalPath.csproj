@@ -6,10 +6,17 @@
     <Nullable>enable</Nullable>
     <Title>Critical Path Method</Title>
     <Company>Novo Nordisk A/S</Company>
-    <Description>An implementation of the Critical Path Method.</Description>
+    <Description>An implementation of the Critical Path Method. See https://en.wikipedia.org/wiki/Critical_path_method</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes>See the CHANGELOG.md</PackageReleaseNotes>
     <Authors>Novo Nordisk Digital Foundation</Authors>
+    <PackageProjectUrl>https://github.com/NovoNordisk-OpenSource/critical-path</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/NovoNordisk-OpenSource/critical-path</RepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>utility</PackageTags>
+    <PackageReleaseNotes>See CHANGELOG.md</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Copyright>Novo Nordisk A/S</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -27,4 +34,17 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\CHANGELOG.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 </Project>
