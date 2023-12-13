@@ -56,7 +56,16 @@ Pull requests requires the build pipeline to pass.
 The nuget package follows [semver.org](https://www.semver.org).
 
 ## Release Procedure
-T.B.D.
+These are the steps needed to create a new release:
+1. Make sure the `CHANGELOG.md`is up to date in tha main branch.
+2. In GitHub, create a new release. 
+   1. The tag version should be the same as the version in the `CHANGELOG.md` file, prefixed with a 'v'. For example `v1.2.3`.
+   2. The release title should be the version number. Fx `1.2.3`. The release title is used as the version number in the nuget package.
+3. The release pipeline will now create a new nuget package and publish it to nuget.org.
+
+To build and publish the nuget package manually, do the following:
+1. Build and test the solution `dotnet build` and `dotnet test`
+2. Package the nuget package with the right version: `dotnet pack NovoNordisk.CriticalPath -c Release /p:PackageVersion=x.y.z`
 
 # References
 Based on:
