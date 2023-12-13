@@ -1,0 +1,31 @@
+name: Release to nuget.org
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+        
+    - name: Restore dependencies
+      run: dotnet restore
+      
+    - name: Build
+      run: dotnet build --no-restore
+      
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+
+    - name: Package 
+      run: dotnet pack NovoNordisk.CriticalPath -c Release /p:PackageVersion=${{github.event.release.name}}
+
+    - name: Publish
+      run: dotnet nuget push NovoNordisk.CriticalPath\bin\Release\NovoNordisk.CriticalPath.${{github.event.release.name}}.nupkg -k ${{ secrets.NUGET_ORG_API_KEY }} --skip-duplicate -s https://api.nuget.org/v3/index.json
