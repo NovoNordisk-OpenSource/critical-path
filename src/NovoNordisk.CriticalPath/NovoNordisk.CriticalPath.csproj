@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Title>Critical Path Method</Title>
+    <Company>Novo Nordisk A/S</Company>
+    <Description>An implementation of the Critical Path Method. See https://en.wikipedia.org/wiki/Critical_path_method</Description>
+    <Authors>Novo Nordisk Digital Foundation</Authors>
+    <PackageProjectUrl>https://github.com/NovoNordisk-OpenSource/critical-path</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/NovoNordisk-OpenSource/critical-path</RepositoryUrl>
+    <PackageReadmeFile>documentation\README.md</PackageReadmeFile>
+    <PackageTags>utility</PackageTags>
+    <PackageReleaseNotes>See CHANGELOG.md</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Copyright>Novo Nordisk A/S</Copyright>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\documentation\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\CHANGELOG.md">
+      <Pack>True</Pack>
+      <PackagePath>\documentation\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
