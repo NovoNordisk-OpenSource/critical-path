@@ -29,6 +29,14 @@ var activities = new HashSet<Activity>
 // Calculate critical path
 var criticalPathMethod = new CriticalPathMethod();
 var criticalPath = criticalPathMethod.Execute(activities);
+
+// Print critical path and its total cost
+Console.WriteLine("Critical Path: " + criticalPath.Select(_ => _.Name).Aggregate((a, b) => $"{a} -> {b}"));
+Console.WriteLine("Critical Path Cost: " + criticalPath.Sum(_ => _.Cost));
+
+// Output:
+// Critical Path: Start -> D -> B -> C -> Finish                                       
+// Critical Path Cost: 280    
 ```
 
 # Notes
