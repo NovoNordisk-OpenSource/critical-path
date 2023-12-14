@@ -5,7 +5,11 @@ This is an implementation of the [Critical Path Method](https://hbr.org/1963/09/
 ## Examples
 See the `CriticalPath.Console` and the `NovoNordisk.CriticalPath.Tests` projects for working examples.
 
-In general, create a `HashSet` of activities and use it as an argument to the `Execute(...)` function in the `CriticalPathMethod` object:
+In general, create a `HashSet` of activities and use it as an argument to the `Execute(...)` function in the `CriticalPathMethod`.
+
+Here is a simple example:
+
+![Alt text](Assets/diagram.png "Title")
 
 ```C#
 // Create activities
@@ -54,6 +58,18 @@ activity is found: `initialActivities.First(_ => _.TotalFloat == 0);`.
 
 ## Free Float for the Final Task
 We define this as 0. You could argue that it is infinite.
+
+## Map your own domain objects to activities
+You can use the activity id property to keep a reference between your own domain objects and critical path activities.
+
+```csharp
+var drinkCoffeeActivity = new Activity("Drink Coffee", myDrinkCoffeeObject.durationMs, cleanMugActivity);
+{
+    Id = myDrinkCoffeeObject.Id,
+};
+```
+
+Another option could be to let your domain objects inherit the `Activity` class. 
 
 # How to Contribute
 ## Branching Strategy
