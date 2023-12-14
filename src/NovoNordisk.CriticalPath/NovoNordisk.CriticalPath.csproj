@@ -10,6 +10,7 @@
     <Authors>Novo Nordisk Digital Foundation</Authors>
     <PackageProjectUrl>https://github.com/NovoNordisk-OpenSource/critical-path</PackageProjectUrl>
     <RepositoryUrl>https://github.com/NovoNordisk-OpenSource/critical-path</RepositoryUrl>
+	<RepositoryType>git</RepositoryType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>utility</PackageTags>
     <PackageReleaseNotes>See CHANGELOG.md</PackageReleaseNotes>
