@@ -9,7 +9,7 @@ In general, create a `HashSet` of activities and use it as an argument to the `E
 
 Here is a simple example:
 
-![Alt text](Assets/diagram.png "Title")
+![Diagram](assets/diagram.png "Example Diagram")
 
 ```C#
 // Create activities
