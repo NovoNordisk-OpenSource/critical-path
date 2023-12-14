@@ -32,4 +32,4 @@ jobs:
       run: dotnet test src --no-build --verbosity normal
 
     - name: Package 
-      run: dotnet pack src/NovoNordisk.CriticalPath -c Release /p:PackageVersion=0.0.1-beta -o $GITHUB_WORKSPACE/release
+      run: dotnet pack src/NovoNordisk.CriticalPath -c Release
