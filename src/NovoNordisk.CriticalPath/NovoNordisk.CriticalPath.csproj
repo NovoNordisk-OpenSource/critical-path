@@ -8,8 +8,10 @@
     <Company>Novo Nordisk A/S</Company>
     <Description>An implementation of the Critical Path Method. See https://en.wikipedia.org/wiki/Critical_path_method</Description>
     <Authors>Novo Nordisk Digital Foundation</Authors>
-    <PackageProjectUrl>https://github.com/NovoNordisk-OpenSource/critical-path</PackageProjectUrl>
     <RepositoryUrl>https://github.com/NovoNordisk-OpenSource/critical-path</RepositoryUrl>
+	<RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/NovoNordisk-OpenSource/critical-path</PackageProjectUrl>
+	<PackageId>NovoNordisk.CriticalPath</PackageId>      
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>utility</PackageTags>
     <PackageReleaseNotes>See CHANGELOG.md</PackageReleaseNotes>
