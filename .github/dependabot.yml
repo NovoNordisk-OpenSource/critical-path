@@ -11,3 +11,5 @@ updates:
       interval: "weekly"
     assignees:
       - "simon-k"
+    reviewers:
+      - "simon-k"
