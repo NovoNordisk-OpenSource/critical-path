@@ -1,3 +1,6 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![semver](https://img.shields.io/badge/semver-2.0.0-blue)
+
 # Critical Path Method
 This is an implementation of the [Critical Path Method](https://hbr.org/1963/09/the-abcs-of-the-critical-path-method). 
 
