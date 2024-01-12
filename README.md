@@ -1,5 +1,10 @@
+![CI](https://img.shields.io/github/actions/workflow/status/NovoNordisk-OpenSource/critical-path/build.yml?logo=github&branch=main&label=CI)
+![CD](https://img.shields.io/github/actions/workflow/status/NovoNordisk-OpenSource/critical-path/release.yml?logo=github&label=CD)
+[![CodeQL](https://github.com/NovoNordisk-OpenSource/critical-path/actions/workflows/github-code-scanning/codeql/badge.svg?branch=main)](https://github.com/NovoNordisk-OpenSource/critical-path/actions/workflows/github-code-scanning/codeql)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-![semver](https://img.shields.io/badge/semver-2.0.0-blue)
+![semver](https://img.shields.io/badge/semver-2.0.0-blue?logo=semver)
+![NuGet Downloads](https://img.shields.io/nuget/dt/NovoNordisk.CriticalPath?logo=nuget)
+![NuGet Version](https://img.shields.io/nuget/v/NovoNordisk.CriticalPath?logo=nuget)
 
 # Critical Path Method
 This is an implementation of the [Critical Path Method](https://hbr.org/1963/09/the-abcs-of-the-critical-path-method). 
