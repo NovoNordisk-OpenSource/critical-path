@@ -25,7 +25,7 @@ jobs:
       run: dotnet test src --no-build --verbosity normal
 
     - name: Package 
-      run: dotnet pack src/NovoNordisk.CriticalPath -c Release /p:IncludeSymbols=true /p:SymbolPackageFormat=snupkg /p:PackageVersion=${{github.event.release.name}} -o $GITHUB_WORKSPACE/release
+      run: dotnet pack src/NovoNordisk.CriticalPath -c Release /p:ContinuousIntegrationBuild=true /p:IncludeSymbols=true /p:SymbolPackageFormat=snupkg /p:PackageVersion=${{github.event.release.name}} -o $GITHUB_WORKSPACE/release
 
     - name: Publish
       run: dotnet nuget push $GITHUB_WORKSPACE/release/NovoNordisk.CriticalPath.${{github.event.release.name}}.nupkg -k ${{ secrets.NUGET_ORG_API_KEY }} --skip-duplicate -s https://api.nuget.org/v3/index.json
