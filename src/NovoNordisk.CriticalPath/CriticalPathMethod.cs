@@ -2,6 +2,9 @@
 
 namespace NovoNordisk.CriticalPath;
 
+/// <summary>
+/// Interface for the Critical Path Method.
+/// </summary>
 public interface ICriticalPathMethod
 {
     /// <summary>

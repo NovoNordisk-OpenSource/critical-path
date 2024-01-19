@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Readme badges
+- XML docs for IDE IntelliSense 
 
 ### Changed
 - Bump xunit from 2.6.5 to 2.6.6 in the test project
