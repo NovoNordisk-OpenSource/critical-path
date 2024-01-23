@@ -13,7 +13,7 @@ public interface ICriticalPathMethod
     /// <param name="activities">List of activities. Note that the HashSet is call-by-reference, so its properties will be modified by this function.</param>
     /// <returns>The activities on the critical path, ordered by their dependencies.</returns>
     List<Activity> Execute(HashSet<Activity> activities);
-}   
+}
 
 /// <summary>
 /// Implementation of the Critical Path Method.
