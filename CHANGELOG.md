@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.3] - 2024-01-23
+### Fixed
+- Improved performance for large activity graphs [Issue #43](https://github.com/NovoNordisk-OpenSource/critical-path/issues/43)
+
+
 ## [2.1.2] - 2024-01-19
 ### Added
 - Readme badges
