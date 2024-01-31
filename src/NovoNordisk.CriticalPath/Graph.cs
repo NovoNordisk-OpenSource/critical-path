@@ -4,8 +4,8 @@ namespace NovoNordisk.CriticalPath;
 
 internal class Graph(ISet<Activity> nodes, ISet<Tuple<Activity, Activity>> edges)
 {
-    public ISet<Activity> Nodes { get; private set; } = nodes;
-    public ISet<Tuple<Activity, Activity>> Edges { get; private set; } = edges;
+    public ISet<Activity> Nodes { get; } = nodes;
+    public ISet<Tuple<Activity, Activity>> Edges { get; } = edges;
 
     public static Graph CreateFromActivities(ISet<Activity> activities)
     {
@@ -34,7 +34,7 @@ internal class Graph(ISet<Activity> nodes, ISet<Tuple<Activity, Activity>> edges
         }
     }
     
-    public IReadOnlyList<Activity> TopologicalSort()
+    internal IReadOnlyList<Activity> TopologicalSort()
     {
         var activities = new List<Activity>();
         var edges = new HashSet<Tuple<Activity, Activity>>(Edges);
