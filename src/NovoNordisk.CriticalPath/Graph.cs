@@ -34,7 +34,7 @@ internal class Graph(ISet<Activity> nodes, ISet<Tuple<Activity, Activity>> edges
         }
     }
     
-    public List<Activity> TopologicalSort()
+    public IReadOnlyList<Activity> TopologicalSort()
     {
         var activities = new List<Activity>();
         var edges = new HashSet<Tuple<Activity, Activity>>(Edges);

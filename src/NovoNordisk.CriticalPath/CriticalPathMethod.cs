@@ -33,7 +33,7 @@ public class CriticalPathMethod : ICriticalPathMethod
         return criticalActivities;
     }
 
-    private static void CalculateCosts(IList<Activity> activities, ISet<Tuple<Activity, Activity>> edges)
+    private static void CalculateCosts(IReadOnlyList<Activity> activities, ISet<Tuple<Activity, Activity>> edges)
     {
         foreach (var activity in activities)
         {
