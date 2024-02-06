@@ -27,20 +27,20 @@ public class CriticalPathMethod : ICriticalPathMethod
     {
         var graph = Graph.CreateFromActivities(activities);
         var sortedActivities = graph.TopologicalSort();
-        CalculateCosts(sortedActivities, graph.Edges);
-        var criticalActivities = CriticalActivities(activities, graph.Edges);
+        CalculateCosts(sortedActivities, graph);
+        var criticalActivities = CriticalActivities(graph);
 
         return criticalActivities;
     }
 
-    private static void CalculateCosts(IReadOnlyList<Activity> activities, ISet<Tuple<Activity, Activity>> edges)
+    private static void CalculateCosts(IReadOnlyList<Activity> activities, Graph graph)
     {
         foreach (var activity in activities)
         {
-            var edgesToActivity = edges.Where(e => e.Item2.Equals(activity)).ToList();
+            var edgesToActivity = graph.GetEdgesTo(activity);
             
             var completionTime = edgesToActivity
-                .Select(e => e.Item1.EarlyFinish)
+                .Select(e => e.EarlyFinish)
                 .DefaultIfEmpty(0)
                 .Max();
             
@@ -61,10 +61,10 @@ public class CriticalPathMethod : ICriticalPathMethod
         var criticalPathMaxCost = activities.Select(activity => activity.CriticalCost).Max();
         foreach (var activity in activities.Reverse())
         {
-            var edgesFromActivity = edges.Where(e => e.Item1.Equals(activity)).ToList();
+            var edgesFromActivity = graph.GetEdgesFrom(activity);
 
             var latestFinish = edgesFromActivity
-                .Select(e => e.Item2.LatestStart)
+                .Select(e => e.LatestStart)
                 .DefaultIfEmpty(criticalPathMaxCost)
                 .Min();
 
@@ -73,9 +73,9 @@ public class CriticalPathMethod : ICriticalPathMethod
         }
     }
     
-    private static List<Activity> CriticalActivities(ISet<Activity> nodes, ISet<Tuple<Activity, Activity>> edges)
+    private static List<Activity> CriticalActivities(Graph graph)
     {
-        var startingNodes = new HashSet<Activity>(nodes.Where(n => edges.All(e => e.Item2.Equals(n) == false)));
+        var startingNodes = graph.GetStartingNodes();
         var criticalActivities = new List<Activity>();
 
         var nextActivity = startingNodes.First(n => n.TotalFloat == 0);
