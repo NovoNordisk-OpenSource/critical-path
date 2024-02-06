@@ -2,11 +2,17 @@ using NovoNordisk.CriticalPath.Exceptions;
 
 namespace NovoNordisk.CriticalPath;
 
-internal class Graph(ISet<Activity> nodes, ISet<Tuple<Activity, Activity>> edges)
+internal class Graph
 {
-    private ISet<Activity> Nodes { get; } = nodes;
-    private ISet<Tuple<Activity, Activity>> Edges { get; } = edges;
+    private ISet<Activity> Nodes { get; }
+    private ISet<Tuple<Activity, Activity>> Edges { get; }
 
+    private Graph(ISet<Activity> nodes, ISet<Tuple<Activity, Activity>> edges)
+    {
+        Nodes = nodes;
+        Edges = edges;
+    }
+    
     public static Graph CreateFromActivities(ISet<Activity> activities)
     {
         var edges = new HashSet<Tuple<Activity, Activity>>();
