@@ -4,13 +4,13 @@ namespace NovoNordisk.CriticalPath;
 
 internal class Graph
 {
-    private ISet<Activity> Nodes { get; }
-    private ISet<Tuple<Activity, Activity>> Edges { get; }
+    private readonly ISet<Activity> _nodes;
+    private readonly ISet<Tuple<Activity, Activity>> _edges;
 
     private Graph(ISet<Activity> nodes, ISet<Tuple<Activity, Activity>> edges)
     {
-        Nodes = nodes;
-        Edges = edges;
+        _nodes = nodes;
+        _edges = edges;
     }
     
     public static Graph CreateFromActivities(ISet<Activity> activities)
@@ -42,24 +42,24 @@ internal class Graph
     
     internal IReadOnlyCollection<Activity> GetEdgesTo(Activity activity)
     {
-        return Edges.Where(e => e.Item2.Equals(activity)).Select(e => e.Item1).ToList();
+        return _edges.Where(e => e.Item2.Equals(activity)).Select(e => e.Item1).ToList();
     }
     
     internal IReadOnlyCollection<Activity> GetEdgesFrom(Activity activity)
     {
-        return Edges.Where(e => e.Item1.Equals(activity)).Select(e => e.Item2).ToList();
+        return _edges.Where(e => e.Item1.Equals(activity)).Select(e => e.Item2).ToList();
     }
 
     internal IReadOnlyCollection<Activity> GetStartingNodes()
     {
-        return Nodes.Where(n => Edges.All(e => e.Item2.Equals(n) == false)).ToList();
+        return _nodes.Where(n => _edges.All(e => e.Item2.Equals(n) == false)).ToList();
     }
     
     internal IReadOnlyList<Activity> TopologicalSort()
     {
         var activities = new List<Activity>();
-        var edges = new HashSet<Tuple<Activity, Activity>>(Edges);
-        var startingNodes = new HashSet<Activity>(Nodes.Where(n => edges.All(e => e.Item2.Equals(n) == false)));
+        var edges = new HashSet<Tuple<Activity, Activity>>(_edges);
+        var startingNodes = new HashSet<Activity>(_nodes.Where(n => edges.All(e => e.Item2.Equals(n) == false)));
         
         while (startingNodes.Any())
         {
