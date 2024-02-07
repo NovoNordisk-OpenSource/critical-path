@@ -21,15 +21,15 @@ Here is a simple example:
 
 ```C#
 // Create activities
-var activityEnd = new Activity("Finish", 0);
-var activityC = new Activity("C", 90, activityEnd);
-var activityG = new Activity("G", 40, activityEnd);
-var activityF = new Activity("F", 20, activityEnd);
-var activityB = new Activity("B", 90, activityC);
-var activityE = new Activity("E", 20, activityG, activityF);
-var activityA = new Activity("A", 50, activityB);
-var activityD = new Activity("D", 100, activityB, activityE);
-var activityStart = new Activity("Start", 0, activityA, activityD);
+var activityEnd = new Activity(name: "Finish", cost: 0);
+var activityC = new Activity(name: "C", cost: 90, dependencies: activityEnd);
+var activityG = new Activity(name: "G", cost: 40, dependencies: activityEnd);
+var activityF = new Activity(name: "F", cost: 20, dependencies: activityEnd);
+var activityB = new Activity(name: "B", cost: 90, dependencies: activityC);
+var activityE = new Activity(name: "E", cost: 20, dependencies: [activityG, activityF]);
+var activityA = new Activity(name: "A", cost: 50, dependencies: activityB);
+var activityD = new Activity(name: "D", cost: 100, dependencies: [activityB, activityE]);
+var activityStart = new Activity(name: "Start", cost: 0, dependencies: [activityA, activityD]);
 
 // Add activities to HashSet
 var activities = new HashSet<Activity>
