@@ -1,5 +1,3 @@
-using NovoNordisk.CriticalPath.Exceptions;
-
 namespace NovoNordisk.CriticalPath;
 
 /// <summary>
@@ -27,82 +25,22 @@ public class CriticalPathMethod : ICriticalPathMethod
     /// <returns>The activities on the critical path, ordered by their dependencies.</returns>
     public List<Activity> Execute(HashSet<Activity> activities)
     {
-        var edges = GetEdges(activities);
-        var sortedActivities = TopologicalSort(activities, edges);
-        CalculateCosts(sortedActivities, edges);
-        var criticalActivities = CriticalActivities(activities, edges);
+        var graph = Graph.CreateFromActivities(activities);
+        var sortedActivities = graph.TopologicalSort();
+        CalculateCosts(sortedActivities, graph);
+        var criticalActivities = CriticalActivities(graph);
 
         return criticalActivities;
     }
-    
-    private static HashSet<Tuple<Activity, Activity>> GetEdges(HashSet<Activity> activities)
-    {
-        var edges = new HashSet<Tuple<Activity, Activity>>();
-        var visited = new HashSet<Activity>();
-        
-        foreach (var activity in activities)
-        {
-            AddEdgesFromActivity(activity, edges, visited);
-        }
-        
-        return edges;
-    }
 
-    private static void AddEdgesFromActivity(Activity activity, HashSet<Tuple<Activity, Activity>> edges, HashSet<Activity> visited)
-    {
-        if (!visited.Add(activity))
-        {
-            return;
-        }
-
-        foreach (var dependency in activity.Dependencies)
-        {
-            edges.Add(new Tuple<Activity, Activity>(activity, dependency));
-            AddEdgesFromActivity(dependency, edges, visited);
-        }
-    }
-    
-    private static List<Activity> TopologicalSort(HashSet<Activity> nodes, HashSet<Tuple<Activity, Activity>> inputEdges)
-    {
-        var activities = new List<Activity>();
-        var edges = new HashSet<Tuple<Activity, Activity>>(inputEdges);
-        var startingNodes = new HashSet<Activity>(nodes.Where(n => edges.All(e => e.Item2.Equals(n) == false)));
-        
-        while (startingNodes.Any())
-        {
-            var node = startingNodes.First();
-            startingNodes.Remove(node);
-            
-            activities.Add(node);
-            
-            foreach (var edge in edges.Where(e => e.Item1.Equals(node)).ToList())
-            {
-                var activity = edge.Item2;
-                edges.Remove(edge);
-                
-                if (edges.All(me => me.Item2.Equals(activity) == false))
-                {
-                    startingNodes.Add(activity);
-                }
-            }
-        }
-        
-        if (edges.Any())
-        {
-            throw new CyclicDependencyException("There is a cyclic dependency in the graph. A critical path cannot be determined");
-        }
-
-        return activities;
-    }
-
-    private static void CalculateCosts(IList<Activity> activities, HashSet<Tuple<Activity, Activity>> edges)
+    private static void CalculateCosts(IReadOnlyList<Activity> activities, Graph graph)
     {
         foreach (var activity in activities)
         {
-            var edgesToActivity = edges.Where(e => e.Item2.Equals(activity)).ToList();
+            var edgesToActivity = graph.GetEdgesTo(activity);
             
             var completionTime = edgesToActivity
-                .Select(e => e.Item1.EarlyFinish)
+                .Select(e => e.EarlyFinish)
                 .DefaultIfEmpty(0)
                 .Max();
             
@@ -123,10 +61,10 @@ public class CriticalPathMethod : ICriticalPathMethod
         var criticalPathMaxCost = activities.Select(activity => activity.CriticalCost).Max();
         foreach (var activity in activities.Reverse())
         {
-            var edgesFromActivity = edges.Where(e => e.Item1.Equals(activity)).ToList();
+            var edgesFromActivity = graph.GetEdgesFrom(activity);
 
             var latestFinish = edgesFromActivity
-                .Select(e => e.Item2.LatestStart)
+                .Select(e => e.LatestStart)
                 .DefaultIfEmpty(criticalPathMaxCost)
                 .Min();
 
@@ -135,9 +73,9 @@ public class CriticalPathMethod : ICriticalPathMethod
         }
     }
     
-    private static List<Activity> CriticalActivities(HashSet<Activity> nodes, HashSet<Tuple<Activity, Activity>> edges)
+    private static List<Activity> CriticalActivities(Graph graph)
     {
-        var startingNodes = new HashSet<Activity>(nodes.Where(n => edges.All(e => e.Item2.Equals(n) == false)));
+        var startingNodes = graph.GetStartingNodes();
         var criticalActivities = new List<Activity>();
 
         var nextActivity = startingNodes.First(n => n.TotalFloat == 0);
