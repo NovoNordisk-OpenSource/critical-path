@@ -5,28 +5,31 @@ namespace NovoNordisk.CriticalPath;
 internal class Graph
 {
     private readonly ISet<Activity> _nodes;
-    private readonly ISet<Tuple<Activity, Activity>> _edges;
-
-    private Graph(ISet<Activity> nodes, ISet<Tuple<Activity, Activity>> edges)
+    private readonly Dictionary<Activity, List<Activity>> _edgesFrom;
+    private readonly Dictionary<Activity, List<Activity>> _edgesTo;
+    
+    private Graph(ISet<Activity> nodes, Dictionary<Activity, List<Activity>> edgesFrom, Dictionary<Activity, List<Activity>> edgesTo)
     {
         _nodes = nodes;
-        _edges = edges;
+        _edgesFrom = edgesFrom;
+        _edgesTo = edgesTo;
     }
     
     public static Graph CreateFromActivities(ISet<Activity> activities)
     {
-        var edges = new HashSet<Tuple<Activity, Activity>>();
+        var edgesFrom = new Dictionary<Activity, List<Activity>>();
+        var edgesTo = new Dictionary<Activity, List<Activity>>();
         var visited = new HashSet<Activity>();
         
         foreach (var activity in activities)
         {
-            AddEdgesFromActivity(activity, edges, visited);
+            AddEdgesFromActivity(activity, edgesFrom, edgesTo, visited);
         }
 
-        return new Graph(activities, edges);
+        return new Graph(activities, edgesFrom, edgesTo);
     }
     
-    private static void AddEdgesFromActivity(Activity activity, ISet<Tuple<Activity, Activity>> edges, ISet<Activity> visited)
+    private static void AddEdgesFromActivity(Activity activity, Dictionary<Activity, List<Activity>> edgesFrom, Dictionary<Activity, List<Activity>> edgesTo, ISet<Activity> visited)
     {
         if (!visited.Add(activity))
         {
@@ -35,31 +38,43 @@ internal class Graph
 
         foreach (var dependency in activity.Dependencies)
         {
-            edges.Add(new Tuple<Activity, Activity>(activity, dependency));
-            AddEdgesFromActivity(dependency, edges, visited);
+            if (!edgesFrom.ContainsKey(activity))
+            {
+                edgesFrom.Add(activity, []);
+            }
+            
+            if (!edgesTo.ContainsKey(dependency))
+            {
+                edgesTo.Add(dependency, []);
+            }
+            
+            edgesFrom[activity].Add(dependency);
+            edgesTo[dependency].Add(activity);
+            AddEdgesFromActivity(dependency, edgesFrom, edgesTo, visited);
         }
     }
     
     internal IReadOnlyCollection<Activity> GetEdgesTo(Activity activity)
     {
-        return _edges.Where(e => e.Item2.Equals(activity)).Select(e => e.Item1).ToList();
+        return _edgesTo.TryGetValue(activity, out var result) ? result : [];
     }
     
     internal IReadOnlyCollection<Activity> GetEdgesFrom(Activity activity)
     {
-        return _edges.Where(e => e.Item1.Equals(activity)).Select(e => e.Item2).ToList();
+        return _edgesFrom.TryGetValue(activity, out var result) ? result : [];
     }
 
     internal IReadOnlyCollection<Activity> GetStartingNodes()
     {
-        return _nodes.Where(n => _edges.All(e => e.Item2.Equals(n) == false)).ToList();
+        return _nodes.Where(n => !_edgesTo.ContainsKey(n)).ToList();
     }
     
     internal IReadOnlyList<Activity> TopologicalSort()
     {
         var activities = new List<Activity>();
-        var edges = new HashSet<Tuple<Activity, Activity>>(_edges);
-        var startingNodes = new HashSet<Activity>(_nodes.Where(n => edges.All(e => e.Item2.Equals(n) == false)));
+        var edgesFrom = _edgesFrom.ToDictionary(entry => entry.Key, entry => new List<Activity>(entry.Value));
+        var edgesTo = _edgesTo.ToDictionary(entry => entry.Key, entry => new List<Activity>(entry.Value));
+        var startingNodes = new List<Activity>(GetStartingNodes());
         
         while (startingNodes.Any())
         {
@@ -68,19 +83,33 @@ internal class Graph
             
             activities.Add(node);
             
-            foreach (var edge in edges.Where(e => e.Item1.Equals(node)).ToList())
+            if (!edgesFrom.TryGetValue(node, out var activitiesEdgeFromNode))
             {
-                var activity = edge.Item2;
-                edges.Remove(edge);
+                continue;
+            }
+            
+            foreach (var activity in activitiesEdgeFromNode.ToList())
+            {
+                edgesFrom[node].Remove(activity);
+                if (edgesFrom[node].Count <= 0)
+                {
+                    edgesFrom.Remove(node);
+                }
                 
-                if (edges.All(me => me.Item2.Equals(activity) == false))
+                edgesTo[activity].Remove(node);
+                if (edgesTo[activity].Count <= 0)
+                {
+                    edgesTo.Remove(activity);
+                }
+                
+                if (!edgesTo.ContainsKey(activity) || edgesTo[activity].Count <= 0)
                 {
                     startingNodes.Add(activity);
                 }
             }
         }
         
-        if (edges.Any())
+        if (edgesFrom.Any())
         {
             throw new CyclicDependencyException("There is a cyclic dependency in the graph. A critical path cannot be determined");
         }
