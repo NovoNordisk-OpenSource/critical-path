@@ -11,7 +11,7 @@ This is an implementation of the [Critical Path Method](https://hbr.org/1963/09/
 
 # Usage
 ## Examples
-See the `CriticalPath.Console` and the `NovoNordisk.CriticalPath.Tests` projects for working examples.
+See the `NovoNordisk.CriticalPath.Console` and the `NovoNordisk.CriticalPath.Tests` projects for working examples.
 
 In general, create a `HashSet` of activities and use it as an argument to the `Execute(...)` function in the `CriticalPathMethod`.
 
@@ -97,7 +97,7 @@ These are the steps needed to create a new release:
 
 To build and publish the nuget package manually, do the following:
 1. Build and test the solution `dotnet build` and `dotnet test`
-2. Package the nuget package with the right version: `dotnet pack NovoNordisk.CriticalPath -c Release /p:PackageVersion=x.y.z`
+2. Package the nuget package with the right version: `dotnet pack NovoNordisk.CriticalPath -c Release /p:PackageVersion=[SEMVER. Fx 1.2.3]`
 
 # References
 Based on:
