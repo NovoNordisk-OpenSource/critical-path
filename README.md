@@ -7,7 +7,7 @@
 ![NuGet Version](https://img.shields.io/nuget/v/NovoNordisk.CriticalPath?logo=nuget)
 
 # Critical Path Method
-This is an implementation of the [Critical Path Method](https://hbr.org/1963/09/the-abcs-of-the-critical-path-method). 
+This is an implementation of the [Critical Path Method](https://hbr.org/1963/09/the-abcs-of-the-critical-path-method). The activities are treated as a graph, and is stored as a adjencency list graph. When determining the order of activities (and checking for cyclic dependencies), the activities are being topological sorted (using [Kahn's algorithm](https://en.wikipedia.org/wiki/Topological_sorting#Kahn's_algorithm)).
 
 # Usage
 ## Examples
