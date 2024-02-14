@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unpublished]
+### Changed
+- Bump Microsoft.NET.Test.Sdk from 17.8.0 to 17.9.0. Only affects the test project.
+
 ## [2.1.4]
 ### Changed
 - Updated the README.md and Console Program to make it clear what the arguments of activities are. [Issue #47](https://github.com/NovoNordisk-OpenSource/critical-path/issues/47)
