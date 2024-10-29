@@ -1,12 +1,17 @@
+![CI](https://img.shields.io/github/actions/workflow/status/NovoNordisk-OpenSource/critical-path/build.yml?logo=github&branch=main&label=CI)
+![CD](https://img.shields.io/github/actions/workflow/status/NovoNordisk-OpenSource/critical-path/release.yml?logo=github&label=CD)
+[![CodeQL](https://github.com/NovoNordisk-OpenSource/critical-path/actions/workflows/github-code-scanning/codeql/badge.svg?branch=main)](https://github.com/NovoNordisk-OpenSource/critical-path/actions/workflows/github-code-scanning/codeql)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-![semver](https://img.shields.io/badge/semver-2.0.0-blue)
+![semver](https://img.shields.io/badge/semver-2.0.0-blue?logo=semver)
+![NuGet Downloads](https://img.shields.io/nuget/dt/NovoNordisk.CriticalPath?logo=nuget)
+![NuGet Version](https://img.shields.io/nuget/v/NovoNordisk.CriticalPath?logo=nuget)
 
 # Critical Path Method
-This is an implementation of the [Critical Path Method](https://hbr.org/1963/09/the-abcs-of-the-critical-path-method). 
+This is an implementation of the [Critical Path Method](https://hbr.org/1963/09/the-abcs-of-the-critical-path-method). The activities are treated as a graph, and is stored as a adjencency list graph. When determining the order of activities (and checking for cyclic dependencies), the activities are being topological sorted (using [Kahn's algorithm](https://en.wikipedia.org/wiki/Topological_sorting#Kahn's_algorithm)).
 
 # Usage
 ## Examples
-See the `CriticalPath.Console` and the `NovoNordisk.CriticalPath.Tests` projects for working examples.
+See the `NovoNordisk.CriticalPath.Console` and the `NovoNordisk.CriticalPath.Tests` projects for working examples.
 
 In general, create a `HashSet` of activities and use it as an argument to the `Execute(...)` function in the `CriticalPathMethod`.
 
@@ -16,15 +21,15 @@ Here is a simple example:
 
 ```C#
 // Create activities
-var activityEnd = new Activity("Finish", 0);
-var activityC = new Activity("C", 90, activityEnd);
-var activityG = new Activity("G", 40, activityEnd);
-var activityF = new Activity("F", 20, activityEnd);
-var activityB = new Activity("B", 90, activityC);
-var activityE = new Activity("E", 20, activityG, activityF);
-var activityA = new Activity("A", 50, activityB);
-var activityD = new Activity("D", 100, activityB, activityE);
-var activityStart = new Activity("Start", 0, activityA, activityD);
+var activityEnd = new Activity(name: "Finish", cost: 0);
+var activityC = new Activity(name: "C", cost: 90, dependencies: activityEnd);
+var activityG = new Activity(name: "G", cost: 40, dependencies: activityEnd);
+var activityF = new Activity(name: "F", cost: 20, dependencies: activityEnd);
+var activityB = new Activity(name: "B", cost: 90, dependencies: activityC);
+var activityE = new Activity(name: "E", cost: 20, dependencies: [activityG, activityF]);
+var activityA = new Activity(name: "A", cost: 50, dependencies: activityB);
+var activityD = new Activity(name: "D", cost: 100, dependencies: [activityB, activityE]);
+var activityStart = new Activity(name: "Start", cost: 0, dependencies: [activityA, activityD]);
 
 // Add activities to HashSet
 var activities = new HashSet<Activity>
@@ -92,7 +97,7 @@ These are the steps needed to create a new release:
 
 To build and publish the nuget package manually, do the following:
 1. Build and test the solution `dotnet build` and `dotnet test`
-2. Package the nuget package with the right version: `dotnet pack NovoNordisk.CriticalPath -c Release /p:PackageVersion=x.y.z`
+2. Package the nuget package with the right version: `dotnet pack NovoNordisk.CriticalPath -c Release /p:PackageVersion=[SEMVER. Fx 1.2.3]`
 
 # References
 Based on:

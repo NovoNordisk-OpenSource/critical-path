@@ -5,6 +5,9 @@
 /// </summary>
 public class CyclicDependencyException : Exception
 {
+    /// <summary>
+    /// Create a new instance of <see cref="CyclicDependencyException"/>
+    /// </summary>
     public CyclicDependencyException(string? message) : base(message)
     {
     }
