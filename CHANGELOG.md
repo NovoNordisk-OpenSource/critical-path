@@ -7,12 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unpublished]
 ### Changed
-- Bump Microsoft.NET.Test.Sdk from 17.9.0 to 17.10.0. Only affects the test project.
-- Bump xunit from 2.7.1 to 2.9.0. Only affects the test project.
-- Bump xunit.runner.visualstudio from 2.5.7 to 2.8.2. Only affects the test project.
-
-## [Unpublished]
-### Changed
+- Bump FluentAssertions from 6.12.0 to 6.12.1. Only affects the test project.
 - Bump Microsoft.NET.Test.Sdk from 17.8.0 to 17.9.0. Only affects the test project.
 - Bump xunit from 2.6.6 to 2.9.2. Only affects the test project.
 - Bump xunit.runner.visualstudio from 2.5.6 to 2.5.7. Only affects the test project.
